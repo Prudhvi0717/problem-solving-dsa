@@ -1,0 +1,40 @@
+## links: https://leetcode.com/problems/graph-valid-tree/
+## links: https://neetcode.io/problems/valid-tree
+
+class Solution:
+    """
+    A tree is undirected, connected and acyclic graph.
+    Since the edges are undirected we need to add an U and V to adj list
+    such that U is neighbour of V and V is neighbour of U.
+    But during dfs we need to check if neighbour is parent node and skip processing it.
+
+    So we need to keep track of all visited nodes and check if they equal the total
+    number of nodes. As it should be a connected graph.
+
+    We just need to perform dfs on one node, as a tree is undirected and connected,
+    it should reach all nodes starting from any node. 
+    """
+    
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        adjList = collections.defaultdict(list)
+
+        for u, v in edges:
+            adjList[u].append(v)
+            adjList[v].append(u)
+
+        visited = set()
+        def dfs(node, parent):
+            if node in visited:
+                return False
+
+            visited.add(node)
+            for nei in adjList[node]:
+                if nei == parent:
+                    continue
+                if not dfs(nei, node):
+                    return False
+            
+            return True
+
+        return dfs(0, -1) and len(visited) == n
+
