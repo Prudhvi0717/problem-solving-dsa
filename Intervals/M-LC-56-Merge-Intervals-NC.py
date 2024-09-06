@@ -1,4 +1,4 @@
-## link: https://leetcode.com/problems/insert-interval/
+## link: https://leetcode.com/problems/merge-intervals/description/
 
 class Solution:
     """
